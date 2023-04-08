@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-""" 
+"""
     Using an REST API for a given employee ID and
-    returns information about list progress 
+    returns information about list progress
 """
 
 import requests
@@ -28,8 +28,8 @@ def get_func():
     employee = employee_response.json()
     EMPLOYEE_NAME = employee["name"]
 
-    print("Employee {} is done with tasks({}/{}):"\
-        .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    print("Employee {} is done with tasks({}/{}):"
+          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
 
     for todo in todo_list:
         if todo["completed"]:
