@@ -4,34 +4,36 @@
     returns information about list progress 
 """
 
-
 import requests
 import sys
 
+url_user = "https://jsonplaceholder.typicode.com/users/"
+url_user_id = "https://jsonplaceholder.typicode.com/todos?userId="
 
-EMPLOYEE_ID = sys.argv[1]
-TODO_API_URL = "https://jsonplaceholder.typicode.com/todos?userId={}"\
-                .format(EMPLOYEE_ID)
 
-response = requests.get(TODO_API_URL)
-todo_list = response.json()
+def get_func():
+    """ Get Data """
+    EMPLOYEE_ID = sys.argv[1]
+    TODO_API_URL = url_user_id + "{}" .format(EMPLOYEE_ID)
 
-NUMBER_OF_DONE_TASKS = sum(1 for todo in todo_list if todo["completed"])
-TOTAL_NUMBER_OF_TASKS = len(todo_list)
+    response = requests.get(TODO_API_URL)
+    todo_list = response.json()
 
-EMPLOYEE_API_URL = "https://jsonplaceholder.typicode.com/users/{}"\
-                    .format(EMPLOYEE_ID)
+    NUMBER_OF_DONE_TASKS = sum(1 for todo in todo_list if todo["completed"])
+    TOTAL_NUMBER_OF_TASKS = len(todo_list)
 
-employee_response = requests.get(EMPLOYEE_API_URL)
-employee = employee_response.json()
-EMPLOYEE_NAME = employee["name"]
+    EMPLOYEE_API_URL = url_user + "{}" .format(EMPLOYEE_ID)
 
-print("Employee {} is done with tasks({}/{}):"\
-      .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    employee_response = requests.get(EMPLOYEE_API_URL)
+    employee = employee_response.json()
+    EMPLOYEE_NAME = employee["name"]
 
-for todo in todo_list:
-    if todo["completed"]:
-        print("\t{}" .format(todo["title"]))
+    print("Employee {} is done with tasks({}/{}):"\
+        .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+
+    for todo in todo_list:
+        if todo["completed"]:
+            print("\t{}" .format(todo["title"]))
 
 if __name__ == '__main__':
-    get_data()
+    get_func()
