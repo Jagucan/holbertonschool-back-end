@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-""" Using an REST API for a given employee ID and
-    returns information about list progress """
+""" 
+    Using an REST API for a given employee ID and
+    returns information about list progress 
+"""
 
 
 import requests
@@ -30,3 +32,6 @@ print("Employee {} is done with tasks({}/{}):"\
 for todo in todo_list:
     if todo["completed"]:
         print("\t{}" .format(todo["title"]))
+
+if __name__ == '__main__':
+    get_data()
