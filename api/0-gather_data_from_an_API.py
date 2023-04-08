@@ -33,7 +33,7 @@ def get_func():
 
     for todo in todo_list:
         if todo["completed"]:
-            print("\t {}" .format(todo["title"]))
+            print("\t {} " .format(todo["title"]))
 
 if __name__ == '__main__':
     get_func()
