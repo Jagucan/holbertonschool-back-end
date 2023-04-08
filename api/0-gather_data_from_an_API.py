@@ -26,14 +26,14 @@ def get_func():
 
     employee_response = requests.get(EMPLOYEE_API_URL)
     employee = employee_response.json()
-    EMPLOYEE_NAME = employee["Name"]
+    EMPLOYEE_NAME = employee["name"]
 
     print("Employee {} is done with tasks({}/{}):"
           .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
 
     for todo in todo_list:
         if todo["completed"]:
-        print("\t {}\n" .format(todo["title"]))
+            print("\t {}" .format(todo["title"]))
 
 if __name__ == '__main__':
     get_func()
