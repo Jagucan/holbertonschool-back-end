@@ -2,6 +2,7 @@
 """ Using an REST API for a given employee ID and
     returns information about list progress """
 
+
 import requests
 import sys
 
