@@ -4,9 +4,9 @@
     returns information about list progress
 """
 
-import urllib.request
 import json
 import sys
+import urllib.request
 
 
 url_user = "https://jsonplaceholder.typicode.com/users/"
