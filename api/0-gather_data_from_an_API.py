@@ -11,6 +11,7 @@ import sys
 
 url_user = "https://jsonplaceholder.typicode.com/users/"
 
+
 def get_func():
     """ This function gets data from the placeholders API """
     with urllib.request.urlopen(url_user + sys.argv[1]) as f:
