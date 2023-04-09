@@ -16,7 +16,7 @@ def get_func():
     if len(sys.argv) != 2:
         sys.exit(1)
 
-    employee_id = sys.argv[1]
+    employee_id = int(sys.argv[1])
 
     """ Get user information """
     user_url = url_base + "{}".format(employee_id)
