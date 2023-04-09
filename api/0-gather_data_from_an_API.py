@@ -4,56 +4,30 @@
     returns information about list progress
 """
 
-import requests
+import urllib.request
+import json
 import sys
 
-url_base = "https://jsonplaceholder.typicode.com/users/"
-url_id = "https://jsonplaceholder.typicode.com/todos?userId="
 
-
-def get_employee_name(id):
-    """ Get user name """
-    resp = requests.get(url_base).json()
-    name = None
-    for i in resp:
-        if i['id'] == id:
-            name = i['name']
-    return name
-
+url_user = 'https://jsonplaceholder.typicode.com/users/'
 
 def get_func():
-    """ Get Data """
-    if len(sys.argv) != 2:
-        sys.exit(1)
-
-    employee_id = int(sys.argv[1])
-
-    """ Get user information """
-    employee_name = get_employee_name(employee_id)
-
-    """ Get user information """
-    user_url = url_base + "{}".format(employee_id)
-    user_response = requests.get(user_url)
-    user_data = user_response.json()
-
-    """ Get list for the user """
-    employee_api_url = url_id + "{}".format(employee_id)
-    todo_response = requests.get(employee_api_url)
-    todo_data = todo_response.json()
-
-    """ Calculate number of completed tasks """
+    """ This function gets data from the placeholders API """
+    with urllib.request.urlopen(url_user + sys.argv[1]) as f:
+        employee_name = json.loads(f.read().decode())
+    with urllib.request.urlopen(url_user + sys.argv[1] + '/todos/') as f:
+        todo_data = json.loads(f.read().decode())
+    
+    """ Calculate number of completed tasks and total number of tasks """
     number_of_done_task = sum(1 for todo in todo_data if todo["completed"])
-
-    """ Calculate total number of tasks """
     total_number_of_tasks = len(todo_data)
-
-    """ Print progress report """
+    
+    """ Display progress report """
     print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, number_of_done_task, total_number_of_tasks))
-
+          .format(employee_name['name'], number_of_done_task, total_number_of_tasks))
     for todo in todo_data:
-        if todo["completed"]:
-            print("\t{} ".format(todo["title"]))
+        if todo['completed']:
+            print("\t{} ".format(todo['title']))
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     get_func()
