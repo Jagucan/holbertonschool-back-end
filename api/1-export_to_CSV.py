@@ -25,24 +25,17 @@ def get_func():
     total_number_of_tasks = len(todo_data)
     employee_name = employee["name"]
     user_id = employee["id"]
-    username =  employee["username"]
-
-    """ Display progress report """
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, number_of_done_task, total_number_of_tasks))
-    for todo in todo_data:
-        if todo["completed"]:
-            print("\t{} ".format(todo["title"]))
+    username = employee["username"]
 
     """ Export data to CSV format """
-    task_data = []
+    data = []
     for todo in todo_data:
         task_title = todo["title"]
         task_completed_status = "True" if todo["completed"] else "False"
-        task_data.append([user_id, username, task_completed_status, task_title])
+        data.append([user_id, username, task_completed_status, task_title])
     with open("{}.csv", mode="w" .format(user_id)) as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-        writer.writerows(task_data)
+        writer.writerows(data)
 
 if __name__ == "__main__":
     get_func()
