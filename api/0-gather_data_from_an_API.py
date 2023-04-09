@@ -11,12 +11,25 @@ url_base = "https://jsonplaceholder.typicode.com/users/"
 url_id = "https://jsonplaceholder.typicode.com/todos?userId="
 
 
+def get_employee_name(id):
+    """ Get user name """
+    resp = requests.get(url_base).json()
+    name = None
+    for i in resp:
+        if i['id'] == id:
+            name = i['name']
+    return name
+
+
 def get_func():
     """ Get Data """
     if len(sys.argv) != 2:
         sys.exit(1)
 
     employee_id = int(sys.argv[1])
+
+    """ Get user information """
+    employee_name = get_employee_name(employee_id)
 
     """ Get user information """
     user_url = url_base + "{}".format(employee_id)
@@ -35,7 +48,6 @@ def get_func():
     total_number_of_tasks = len(todo_data)
 
     """ Print progress report """
-    employee_name = user_data["name"]
     print("Employee {} is done with tasks({}/{}):"
           .format(employee_name, number_of_done_task, total_number_of_tasks))
 
