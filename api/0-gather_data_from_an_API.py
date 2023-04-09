@@ -10,6 +10,7 @@ import sys
 url_base = "https://jsonplaceholder.typicode.com/users/"
 url_id = "https://jsonplaceholder.typicode.com/todos?userId="
 
+
 def get_func():
     """ Get Data """
     if len(sys.argv) != 2:
@@ -20,7 +21,7 @@ def get_func():
     """ Get user information """
     user_url = url_base + "{}".format(employee_id)
     user_response = requests.get(user_url)
-    employee_name = user_response.json()
+    user_data = user_response.json()
 
     """ Get list for the user """
     employee_api_url = url_id + "{}".format(employee_id)
@@ -34,8 +35,9 @@ def get_func():
     total_number_of_tasks = len(todo_data)
 
     """ Print progress report """
+    employee_name = user_data["name"]
     print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name["name"], number_of_done_task, total_number_of_tasks))
+          .format(employee_name, number_of_done_task, total_number_of_tasks))
 
     for todo in todo_data:
         if todo["completed"]:
