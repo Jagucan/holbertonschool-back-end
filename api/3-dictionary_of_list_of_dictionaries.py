@@ -42,4 +42,3 @@ def get_func():
 
 if __name__ == "__main__":
     get_func()
-
