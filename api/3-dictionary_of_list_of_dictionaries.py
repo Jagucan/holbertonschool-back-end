@@ -36,7 +36,7 @@ def get_func():
         """ Export data to JSON format """
         data = {user_id: [{"username": username, "task": task_title,
                            "completed": task_completed_status}
-                            for todo in t_data]}
+                           for todo in t_data]}
         all_data.update(data)
         with open("todo_all_employees.json", mode="w") as f:
             json.dump(all_data, f)
