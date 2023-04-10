@@ -20,23 +20,22 @@ def get_func():
     all_data = {}
     for emp in employee_data:
         with urllib.request.urlopen(url + str(emp["id"]) + "/todos/") as f:
-            t_data = json.loads(f.read().decode())
+            dat = json.loads(f.read().decode())
 
         """ Calculate number of completed tasks and total number of tasks """
-        number_of_done_task = sum(1 for todo in t_data if todo["completed"])
-        total_number_of_tasks = len(t_data)
+        number_of_done_task = sum(1 for t in dat if t["completed"])
+        total_number_of_tasks = len(dat)
         employee_name = emp["name"]
         user_id = emp["id"]
         username = emp["username"]
 
-        for todo in t_data:
-            task_completed_status = todo["completed"]
-            task_title = todo["title"]
+        for t in dat:
+            task_completed_status = t["completed"]
+            task_title = t["title"]
 
         """ Export data to JSON format """
         data = {user_id: [{"username": username, "task": task_title,
-                           "completed": task_completed_status}
-                           for todo in t_data]}
+                           "completed": task_completed_status} for t in dat]}
         all_data.update(data)
         with open("todo_all_employees.json", mode="w") as f:
             json.dump(all_data, f)
