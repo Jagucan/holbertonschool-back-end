@@ -15,21 +15,22 @@ url_user = "https://jsonplaceholder.typicode.com/users/"
 def get_func():
     """ This function gets data from the placeholders API """
     with urllib.request.urlopen(url_user + sys.argv[1]) as f:
-        employee_name = json.loads(f.read().decode())
+        EMPLOYEE_NAME = json.loads(f.read().decode())
     with urllib.request.urlopen(url_user + sys.argv[1] + "/todos/") as f:
         todo_data = json.loads(f.read().decode())
 
     """ Calculate number of completed tasks and total number of tasks """
-    number_of_done_task = sum(1 for todo in todo_data if todo["completed"])
-    total_number_of_tasks = len(todo_data)
-    employee_name = employee_name["name"]
+    NUMBER_OF_DONE_TASKS = sum(1 for todo in todo_data if todo["completed"])
+    TOTAL_NUMBER_OF_TASKS = len(todo_data)
+    EMPLOYEE_NAME = EMPLOYEE_NAME["name"]
 
     """ Display progress report """
     print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, number_of_done_task, total_number_of_tasks))
+          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
     for todo in todo_data:
+        TASK_TITLE = todo["title"]
         if todo["completed"]:
-            print("\t{} ".format(todo["title"]))
+            print("\t{} ".format(TASK_TITLE))
 
 if __name__ == "__main__":
     get_func()
