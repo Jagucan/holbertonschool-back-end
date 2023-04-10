@@ -38,7 +38,8 @@ def get_func():
         writer.writerows(data)
 
     """ Export data to JSON format """
-    data = {user_id: [{"task": task_title, "completed": task_completed_status, "username": username} for todo in todo_data]}
+    data = {user_id: [{"task": task_title, "completed": task_completed_status,
+                       "username": username} for todo in todo_data]}
     with open("{}.json".format(user_id), mode="w") as f:
         json.dump(data, f)
 
