@@ -24,13 +24,15 @@ def get_func():
     TOTAL_NUMBER_OF_TASKS = len(todo_data)
     EMPLOYEE_NAME = EMPLOYEE_NAME["name"]
 
-    """ Display progress report """
-    print("Employee {} is done with tasks({}/{}):"
-          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
     for todo in todo_data:
         TASK_TITLE = todo["title"]
         if todo["completed"]:
             print("\t{} ".format(TASK_TITLE))
+
+    """ Display progress report """
+    print("Employee {} is done with tasks({}/{}):"
+          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+
 
 if __name__ == "__main__":
     get_func()
