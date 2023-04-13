@@ -6,42 +6,44 @@
 
 import csv
 import json
+import requests
 import sys
-import urllib.request
 
 
 url_user = "https://jsonplaceholder.typicode.com/users/"
 
 
 def get_func():
-    """ This function gets data from the placeholders API """
-    with urllib.request.urlopen(url_user + sys.argv[1]) as f:
-        employee = json.loads(f.read().decode())
-    with urllib.request.urlopen(url_user + sys.argv[1] + "/todos/") as f:
-        todo_data = json.loads(f.read().decode())
+    """Get data from the placeholders API and export to CSV format"""
+    EMPLOYEE_NAME = requests.get(url_user + sys.argv[1]).json()
+    todo_data = requests.get(url_user + sys.argv[1] + "/todos/").json()
 
-    """ Calculate number of completed tasks and total number of tasks """
-    number_of_done_task = sum(1 for todo in todo_data if todo["completed"])
-    total_number_of_tasks = len(todo_data)
-    employee_name = employee["name"]
-    user_id = employee["id"]
-    username = employee["username"]
+    """Count completed tasks and generate task titles"""
+    NUMBER_OF_DONE_TASKS = 0
+    TASK_TITLE = []
+    for todo in todo_data:
+        if todo["completed"] is True:
+            TASK_TITLE.append(todo["title"])
+            NUMBER_OF_DONE_TASKS += 1
 
-    """ Export data to CSV format """
+    """Export data to CSV format"""
+    USER_ID = sys.argv[1]
+    USERNAME = EMPLOYEE_NAME['username']
     data = []
     for todo in todo_data:
-        task_title = todo["title"]
-        task_completed_status = "True" if todo["completed"] else "False"
-        data.append([user_id, username, task_completed_status, task_title])
-    with open("{}.csv", mode="w" .format(user_id)) as file:
+        TASK_TITLE = todo["title"]
+        TASK_COMPLETED_STATUS = "True" if todo["completed"] else "False"
+        data.append([USER_ID, USERNAME, TASK_COMPLETED_STATUS, TASK_TITLE])
+    with open("{}.csv".format(USER_ID), mode="w") as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         writer.writerows(data)
 
     """ Export data to JSON format """
-    data = {user_id: [{"task": task_title, "completed": task_completed_status,
-                       "username": username} for todo in todo_data]}
-    with open("{}.json".format(user_id), mode="w") as f:
+    data = {USER_ID: [{"task": TASK_TITLE, "completed": TASK_COMPLETED_STATUS,
+                       "username": USERNAME} for todo in todo_data]}
+    with open("{}.json".format(USER_ID), mode="w") as f:
         json.dump(data, f)
+
 
 if __name__ == "__main__":
     get_func()
