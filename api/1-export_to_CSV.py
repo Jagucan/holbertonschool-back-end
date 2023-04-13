@@ -4,8 +4,8 @@
     returns information about list progress
 """
 
-import requests
 import csv
+import requests
 import sys
 
 
