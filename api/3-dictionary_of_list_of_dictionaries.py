@@ -19,7 +19,7 @@ def get_func():
         with requests.get(url_user + str(emp["id"]) + "/todos/") as f:
             dat = f.json()
 
-            """ Calculate number of completed tasks and total number of tasks """
+            """Calculate number of completed tasks and total number of tasks"""
             number_of_done_task = sum(1 for t in dat if t["completed"])
             total_number_of_tasks = len(dat)
             employee_name = emp["name"]
